@@ -1,0 +1,21 @@
+# Regnum integration context
+
+- **Backend stack**: Node.js, Express, TypeScript, `ws` on same HTTP server as REST.
+- **Backend entry**: [`src/index.ts`](src/index.ts) (`PORT` default `3000`).
+- **Frontend repo**: cloned into [`frontend`](frontend) (Vite + React + TanStack Router).
+- **Dual-port local dev**:
+  - backend: `http://localhost:3000`
+  - frontend: `http://localhost:5173`
+- **Frontend env wiring**:
+  - `VITE_API_BASE_URL` (default `http://localhost:3000`)
+  - `VITE_WS_BASE_URL` (default `ws://localhost:3000`)
+  - defined in [`frontend/src/lib/config.ts`](frontend/src/lib/config.ts)
+- **REST API**: `/api/player`, `/api/matchmaking`, `/api/game`
+- **WS endpoints**:
+  - `/ws/matchmaking` first message `{ type: "listen", wsClientId }`
+  - `/ws/game/:gameId` first message `{ type: "auth", playerId, gameId }`
+- **Frontend network modules**:
+  - REST client: [`frontend/src/lib/api.ts`](frontend/src/lib/api.ts)
+  - game WS: [`frontend/src/lib/socket.ts`](frontend/src/lib/socket.ts)
+  - matchmaking WS: [`frontend/src/lib/matchmakingSocket.ts`](frontend/src/lib/matchmakingSocket.ts)
+- **Core backend logic**: [`src/services/gameService.ts`](src/services/gameService.ts), chess in [`src/engine/chess.ts`](src/engine/chess.ts), economy in [`src/engine/economy.ts`](src/engine/economy.ts).
