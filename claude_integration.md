@@ -16,6 +16,18 @@ Set in frontend environment if you need non-default endpoints:
 - `VITE_API_BASE_URL` (default `http://localhost:3000`)
 - `VITE_WS_BASE_URL` (default `ws://localhost:3000`)
 
+## Backend env vars
+
+- `DATABASE_URL` (Neon Postgres connection string, prefer pooled endpoint host)
+- `NEON_ORG_ID=org-bitter-tooth-16919735`
+- `NEON_PROJECT_ID=dawn-bonus-34358263`
+
+## Production deployment mapping
+
+- Frontend: Vercel project with root directory `frontend`
+- Backend: Railway service from repo root
+- Database: Neon project `dawn-bonus-34358263`
+
 ## Runtime flow
 
 1. Frontend ensures server player via `POST /api/player/guest` or `GET /api/player/me`.

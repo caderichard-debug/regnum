@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import http from 'http'
 import express from 'express'
 import cors from 'cors'
@@ -9,6 +10,7 @@ import { MatchmakingService } from './services/matchmakingService.js'
 import { playerRouter } from './routes/player.js'
 import { matchmakingRouter } from './routes/matchmaking.js'
 import { gameRouter } from './routes/game.js'
+import { healthRouter } from './routes/health.js'
 import { attachWebSockets } from './ws/wsServer.js'
 
 const PORT = Number(process.env.PORT) || 3000
@@ -26,6 +28,7 @@ app.use(express.json())
 app.use('/api/player', playerRouter(playerStore))
 app.use('/api/matchmaking', matchmakingRouter(matchmakingService, playerStore))
 app.use('/api/game', gameRouter(gameService, playerStore))
+app.use('/api/health', healthRouter())
 
 const server = http.createServer(app)
 attachWebSockets(server, gameService, playerStore)

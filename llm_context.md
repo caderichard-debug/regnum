@@ -3,6 +3,10 @@
 - **Backend stack**: Node.js, Express, TypeScript, `ws` on same HTTP server as REST.
 - **Backend entry**: [`src/index.ts`](src/index.ts) (`PORT` default `3000`).
 - **Frontend repo**: cloned into [`frontend`](frontend) (Vite + React + TanStack Router).
+- **Production deployment topology**:
+  - frontend -> Vercel (root directory: `frontend`, config in `frontend/vercel.json`)
+  - backend -> Railway (Node/Express app at repo root)
+  - database -> Neon (`org-bitter-tooth-16919735`, `dawn-bonus-34358263`)
 - **Dual-port local dev**:
   - backend: `http://localhost:3000`
   - frontend: `http://localhost:5173`
@@ -11,6 +15,13 @@
   - `VITE_WS_BASE_URL` (default `ws://localhost:3000`)
   - defined in [`frontend/src/lib/config.ts`](frontend/src/lib/config.ts)
 - **REST API**: `/api/player`, `/api/matchmaking`, `/api/game`
+- **Health endpoints**: `/api/health` (service status), `/api/health/db` (Postgres connectivity check)
+- **Database wiring**: backend now includes `pg` pool at [`src/db/pool.ts`](src/db/pool.ts), reads `DATABASE_URL` from env.
+- **Neon project**:
+  - org: `org-bitter-tooth-16919735`
+  - project: `dawn-bonus-34358263` (`Regnum`)
+  - default database: `neondb`
+  - recommended host: pooled endpoint (`-pooler`) for local/serverless safety
 - **WS endpoints**:
   - `/ws/matchmaking` first message `{ type: "listen", wsClientId }`
   - `/ws/game/:gameId` first message `{ type: "auth", playerId, gameId }`
